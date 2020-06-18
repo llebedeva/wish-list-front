@@ -30,10 +30,13 @@
 </template>
 
 <script>
+  import Sortable from 'sortablejs';
+
   import {
       getWishlist,
       createWishAction,
-      updateWishAction
+      updateWishAction,
+      changeOrderWishesAction
     } from '../js/wishActions.js';
   import Modal from './Modal.vue'
   import WishItem from './WishItem.vue'
@@ -65,6 +68,25 @@
           priority: wish['priority']
         });
       });
+
+      const wishList = document.getElementById('list');
+      const wishItem = document.querySelectorAll('#list .list-group-item');
+
+      if (wishItem !== null) {
+        Sortable.create(wishList, {
+          multiDrag: true,
+          fallbackTolerance: 3,
+          animation: 150,
+
+          onEnd: async function (/**Event*/evt) {
+            const oldIndex = evt.oldIndex;
+            const newIndex = evt.newIndex;
+            if (oldIndex !== newIndex) {
+              await changeOrderWishesAction(oldIndex, newIndex);
+            }
+          }
+        });
+      }
     },
     methods: {
       showModal(item = null) {
