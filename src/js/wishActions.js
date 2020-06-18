@@ -76,7 +76,7 @@ const getWishlist = async () => {
 };
 
 const getWish = async (wishId) => {
-    const response = await fetch(path + '/' + wishId + '/info', {
+    const response = await fetch(path + '/' + wishId, {
         method: 'GET',
     });
     if (response.ok) {

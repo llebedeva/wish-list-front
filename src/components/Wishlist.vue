@@ -30,106 +30,106 @@
 </template>
 
 <script>
-import {
-    getWishlist,
-    createWishAction,
-    updateWishAction
-  } from '../js/wishActions.js';
-import Modal from './Modal.vue'
-import WishItem from './WishItem.vue'
+  import {
+      getWishlist,
+      createWishAction,
+      updateWishAction
+    } from '../js/wishActions.js';
+  import Modal from './Modal.vue'
+  import WishItem from './WishItem.vue'
 
-export default {
-  name: 'Wishlist',
-  components: {
-    Modal,
-    WishItem
-  },
-  data() {
-    return {
-      wishlist: [],
-      isModalVisible: false,
-      id: null,
-      name: '',
-      link: '',
-      description: ''
-    }
-  },
-  created : async function() {
-    const wishlist = await getWishlist();
-    wishlist.forEach(wish => {
-      this.wishlist.push({
-        id: wish['id'],
-        name: wish['wish'],
-        link: wish['link'],
-        description: wish['description'],
-        priority: wish['priority']
-      });
-    });
-  },
-  methods: {
-    showModal(item = null) {
-      if (item) {
-        this.id = item['id'];
-        this.name = item['name'];
-        this.link = item['link'];
-        this.description = item['description'];
-      } else {
-        this.id = null;
-        this.name = '';
-        this.link = '';
-        this.description = '';
+  export default {
+    name: 'Wishlist',
+    components: {
+      Modal,
+      WishItem
+    },
+    data() {
+      return {
+        wishlist: [],
+        isModalVisible: false,
+        id: null,
+        name: '',
+        link: '',
+        description: ''
       }
-      this.isModalVisible = true;
     },
-    hideModal() {
-      this.isModalVisible = false;
-    },
-    addWishItem(id, name, link, description) {
-      this.wishlist.push({
-        id: id,
-        name: name,
-        link: link,
-        description: description
+    created : async function() {
+      const wishlist = await getWishlist();
+      wishlist.forEach(wish => {
+        this.wishlist.push({
+          id: wish['id'],
+          name: wish['wish'],
+          link: wish['link'],
+          description: wish['description'],
+          priority: wish['priority']
+        });
       });
     },
-    updateWishItem(id, name, link, description) {
-      let index = 0;
-      for (let item of this.wishlist) {
-        if (item.id === id) {
-          this.wishlist[index]['name'] = name;
-          this.wishlist[index]['link'] = link;
-          this.wishlist[index]['description'] = description;
-          break;
+    methods: {
+      showModal(item = null) {
+        if (item) {
+          this.id = item['id'];
+          this.name = item['name'];
+          this.link = item['link'];
+          this.description = item['description'];
+        } else {
+          this.id = null;
+          this.name = '';
+          this.link = '';
+          this.description = '';
         }
-        index++;
-      }
-    },
-    removeWishItem(id) {
-      let index = 0;
-      for (let item of this.wishlist) {
-        if (item.id === id) {
-          this.wishlist.splice(index, 1);
-          break;
+        this.isModalVisible = true;
+      },
+      hideModal() {
+        this.isModalVisible = false;
+      },
+      addWishItem(id, name, link, description) {
+        this.wishlist.push({
+          id: id,
+          name: name,
+          link: link,
+          description: description
+        });
+      },
+      updateWishItem(id, name, link, description) {
+        let index = 0;
+        for (let item of this.wishlist) {
+          if (item.id === id) {
+            this.wishlist[index]['name'] = name;
+            this.wishlist[index]['link'] = link;
+            this.wishlist[index]['description'] = description;
+            break;
+          }
+          index++;
         }
-        index++;
-      }
-    },
-    async formSubmit() {
-      if (this.id) {
-        if (await updateWishAction(this.id, this.name, this.link, this.description)) {
-          this.updateWishItem(this.id, this.name, this.link, this.description);
-          this.hideModal();
+      },
+      removeWishItem(id) {
+        let index = 0;
+        for (let item of this.wishlist) {
+          if (item.id === id) {
+            this.wishlist.splice(index, 1);
+            break;
+          }
+          index++;
         }
-      } else {
-        this.id = await createWishAction(this.name, this.link, this.description);
+      },
+      async formSubmit() {
         if (this.id) {
-          this.addWishItem(this.id, this.name, this.link, this.description);
-          this.hideModal();
+          if (await updateWishAction(this.id, this.name, this.link, this.description)) {
+            this.updateWishItem(this.id, this.name, this.link, this.description);
+            this.hideModal();
+          }
+        } else {
+          this.id = await createWishAction(this.name, this.link, this.description);
+          if (this.id) {
+            this.addWishItem(this.id, this.name, this.link, this.description);
+            this.hideModal();
+          }
         }
       }
     }
   }
-}
 </script>
 
 <style scoped>

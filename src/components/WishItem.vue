@@ -1,6 +1,6 @@
 <template>
     <div class="list-group-item">
-        <a :href="url">{{ this.name }}</a>
+        <router-link :to="url">{{ this.name }}</router-link>
         <button @click="show(item)">Edit</button>
         <button @click="deleteItem">Delete</button>
     </div>

@@ -1,17 +1,13 @@
 <template>
   <div id="app">
-    <Wishlist/>
+    <router-view></router-view>
   </div>
 </template>
 
 <script>
-import Wishlist from './components/Wishlist.vue'
 
 export default {
-  name: 'App',
-  components: {
-    Wishlist
-  }
+  name: 'App'
 }
 </script>
 
