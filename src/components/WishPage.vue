@@ -14,16 +14,15 @@
 
     export default {
         name: "WishPage",
+        props: ['id'],
         data() {
            return {
-               id: '',
                name: '',
                link: '',
                description: '',
            }
         },
         created : async function() {
-            this.id = this.$route.params.id;
             let wish = await getWish(this.id);
             wish = wish[0];
             this.name = wish['wish'];

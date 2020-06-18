@@ -14,9 +14,9 @@ const router = new VueRouter({
   mode: 'history',
   base: __dirname,
   routes: [
-    { path: '/', component: Wishlist},
-    { path: '/wish/:id', component: WishPage},
-    { path: '*', component: PageNotFound}
+    { path: '/', component: Wishlist },
+    { path: '/wish/:id', component: WishPage, props: true },
+    { path: '*', component: PageNotFound }
   ]
 });
 
