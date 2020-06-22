@@ -13,7 +13,7 @@
       <form @submit.prevent="formSubmit">
         <label for="wish">Wish:</label>
         <br>
-        <input id="wish" v-model.trim="name" type="text" required>
+        <input id="wish" v-model.trim="name" type="text">
         <br>
         <label for="link">Reference:</label>
         <br>
@@ -23,7 +23,7 @@
         <br>
         <textarea id="description" v-model.trim="description" rows="3" cols="40"></textarea>
         <br>
-        <input type="submit">
+        <button type="submit" v-bind:disabled="!formIsValid">Save</button>
       </form>
     </modal>
   </div>
@@ -55,6 +55,11 @@
         name: '',
         link: '',
         description: ''
+      }
+    },
+    computed: {
+      formIsValid() {
+        return this.name;
       }
     },
     created : async function() {
