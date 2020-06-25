@@ -32,7 +32,7 @@
         methods: {
             async deleteItem() {
                 await deleteWishAction(this.id);
-                document.getElementById('back').click();
+                await this.$router.push('/');
             }
         }
     }
