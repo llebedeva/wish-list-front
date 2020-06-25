@@ -2,7 +2,7 @@ import Vue from 'vue'
 import VueRouter from 'vue-router'
 import App from './App.vue'
 
-import Wishlist from "./components/Wishlist";
+import WishlistPage from "./components/WishlistPage";
 import WishPage from "./components/WishPage";
 import PageNotFound from "./components/404";
 
@@ -14,7 +14,7 @@ const router = new VueRouter({
   mode: 'history',
   base: __dirname,
   routes: [
-    { path: '/', component: Wishlist },
+    { path: '/', component: WishlistPage },
     { path: '/wish/:id', component: WishPage, props: true },
     { path: '*', component: PageNotFound }
   ]

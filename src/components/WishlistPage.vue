@@ -42,7 +42,7 @@
   import WishItem from './WishItem.vue'
 
   export default {
-    name: 'Wishlist',
+    name: 'WishlistPage',
     components: {
       Modal,
       WishItem
